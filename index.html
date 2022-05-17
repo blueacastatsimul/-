@@ -1,0 +1,350 @@
+<head>
+  <script type="module" src="./main.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tooltip.css">
+  <style>
+    table{
+      border: 2px solid; 
+      border-collapse: collapse;
+    }
+
+    th, td{ 
+      border: 1px solid;
+      width: 150px;
+      text-align: center;
+    }
+  </style>
+  <title>스탯 시뮬레이터</title>
+</head>
+
+<body>  
+<div id="back_box"></div>
+<div id="box1"></div>
+<div id="box2"></div>
+
+<datalist id="name_list"></datalist>
+<input id="input_name" list="name_list" placeholder="학생 이름">
+<input type="number" min="1" max="78" step="1" id="input_lev" placeholder="학생 레벨">
+<input type="number" min="1" max="5" step="1" id="input_star" placeholder="학생 성급">
+<input min="1" max="5" step="1" id="input_exlev" placeholder="레벨 입력">
+<br><br>
+<input id="input_s1lev" placeholder="레벨 입력">
+<br><br>
+<input id="input_s2lev" placeholder="레벨 입력">
+<br><br>
+<input id="input_s3lev" placeholder="레벨 입력">
+<input type="submit" id="input" >
+
+<div id="box2_t">기본 능력치</div>
+<div id="box3"></div>
+<div id="stuHP">생명력</div><div id="stu_hp"></div>
+<div id="stuATK">공격력</div><div id="stu_atk"></div>
+<div id="stuDEF">방어력</div><div id="stu_def"></div>
+<div id="stuHEAL">치유력</div><div id="stu_heal"></div>
+<div id="detailB"></div>
+<button id="detailT" onclick="showPopup1();">🔍<br>상세</button>
+
+<div id="box4"></div>
+<div id="box5"></div>
+<div id="box5_1"></div>
+<div id="box6"></div>
+<div id="box6_t">공격타입</div>
+<div id="box6_type">신비</div>
+<div id="box7"></div>
+<div id="box7_t">방어타입</div>
+<div id="box7_type">경장갑</div>
+<div id="urban">시가지</div>
+<div id="stu_urban"></div>
+<div id="outdoor">야외</div>
+<div id="stu_outdoor"></div>
+<div id="indoor">실내</div>
+<div id="stu_indoor"></div>
+
+<div id="box8"></div>
+<div id="box9_ex" class="tooltipex">EX 스킬<div class="tooltipex-text" >
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_ex_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+  <div style="color: #476f8f; font-style: italic; display: inline;">EX스킬</div><div style="color: #c6c6c4; display:inline"> / </div>
+  <div style="color: #636564; font-style: italic; display: inline;">COST : </div><div id="stu_ex_cost" style="color: #1a3854; display: inline;"></div>
+  <div style="color: #f79a0a; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+  <div id="ex_lev" style="color: #f79a0a; display: inline;"></div>
+  <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+  <div style="color: #657787;"><div id="stu_ex_detail"></div></div>
+  <div ></div>
+</div></div>
+<img id="image_exskill" src="./errorImage.jpg" alt="추가 예정">
+<div id="box9_exl"></div>
+<div id="box9_s1" class="tooltips1">기본 스킬<div class="tooltips1-text" >
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s1_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+  <div style="color: #476f8f; font-style: italic; display: inline;">기본스킬</div>
+  <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+  <div id="s1_lev" style="color: #f79a0a; display: inline;"></div>
+  <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+  <div style="color: #657787;"><div id="stu_s1_detail"></div></div>
+</div></div>
+<img id="image_s1" src="./errorImage.jpg" alt="추가 예정">
+<div id="box9_s1l"></div>
+<div id="box9_s2" class="tooltips2">강화 스킬<div class="tooltips2-text" >
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s2_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+  <div style="color: #476f8f; font-style: italic; display: inline;">강화스킬</div>
+  <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+  <div id="s2_lev" style="color: #f79a0a; display: inline;"></div>
+  <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+  <div style="color: #657787;"><div id="stu_s2_detail"></div></div>
+</div></div>
+<img id="image_s2" src="./errorImage.jpg" alt="추가 예정" >
+<div id="box9_s2l"></div>
+<div id="box9_s3" class="tooltips3">서브 스킬<div class="tooltips3-text" >
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+  <div style="color: #476f8f; font-style: italic; display: inline;">서브스킬</div>
+  <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+  <div id="s3_lev" style="color: #f79a0a; display: inline;"></div>
+  <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+  <div style="color: #657787;"><div id="stu_s3_detail"></div></div>
+</div></div>
+<img id="image_s3" src="./errorImage.jpg" alt="추가 예정">
+<div id="box9_s3l"></div>
+<button id="box9_bonus" onclick="showPopup2();">스탯<br>보너스<br>입력</button>
+
+<div id="box10"></div>
+<div id="box11"></div>
+
+<div class="eq_detail" id="box12_equip1" ><div id="equip1"></div><div class="eq_detail-text">
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#677888;">-----------------------------------------</div>
+  <div style="color: #476f8f; display: inline;"><div id="equip1_detail"></div></div>
+  <div style="color: #657787;"></div>
+</div></div>
+<div class="eq_detail" id="box12_equip2"><div id="equip2"></div><div class="eq_detail-text">
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color:#677888;">-----------------------------------------</div>
+  <div style="color: #476f8f; display: inline;"><div id="equip2_detail"></div></div>
+  <div style="color: #657787;"></div>
+</div></div>
+<div class="eq_detail"id="box12_equip3"><div id="equip3"></div><div class="eq_detail-text">
+  <div style="color: #64cbf2; display:inline" >| </div>
+  <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+  <div style="font-size: 1px; line-height: 1px; color: #677888;">-----------------------------------------</div>
+  <div style="color: #476f8f; display: inline;"><div id="equip3_detail"></div></div>
+  <div style="color: #657787;"></div>
+</div></div>
+<div id="box_simul"></div>
+
+<input id="input_eq1" placeholder="장비 티어">
+<input id="input_eq2" placeholder="장비 티어">
+<input id="input_eq3" placeholder="장비 티어">
+
+<div id="left_box"></div>
+<div id="left_name"><div id="stu_name"></div></div>
+<div id="left_lv" style="display: inline;">LV. <div id="display_lv" style="display: inline;"></div></div>
+<div id="star"></div>
+<div id="bond"></div>
+<div id="bond1">❤️</div>
+<div id="bond2" style="font-size:10px; font-style: italic;">Rank<input id="input_bond" value="1"></div>
+
+<div style="position: absolute; top:450px;" >
+  <table>
+    <tr>
+      <td>
+        <input style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_name" list="name_list" placeholder="적 학생 이름">
+      </td>
+      <td>
+        <input max="100" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_lev" placeholder="적 학생 레벨">
+      </td>
+      <td>
+        <input max="5" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_star" placeholder="적 학생 성급">
+      </td>
+      <td>
+        <input max="50" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_bond" placeholder="적 학생 인연 레벨">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq1" placeholder="장비 1">
+      </td>
+      <td>
+        <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq2" placeholder="장비 2">
+      </td>
+      <td>
+        <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq3" placeholder="장비 3">
+      </td>
+      <td>
+        <input id="enemy_input" style="width : 100px; height: 30px;" type="submit" value="입력">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        추가 체력
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_hp" value=0 style="height: 30px; text-align: center;">
+      </td>
+      <td>
+        추가 방어력
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_def" value=0 style="height: 30px; text-align: center;">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        추가 체력(%)
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_hpP" value=0 style="height: 30px; text-align: center;">
+      </td>
+      <td>
+        추가 방어력(%)
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_defP" value=0 style="height: 30px; text-align: center;">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        추가 회피 수치 
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_evade" value=0 style="height: 30px; text-align: center;">
+      </td>
+      <td>
+        추가 치명 저항
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_Cres" value=0 style="height: 30px; text-align: center;">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="font-size: 14px;">추가 회피 수치(%)</div>
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_evadeP" value=0 style="height: 30px; text-align: center;">
+      <td>
+        <div style="font-size: 14px;">추가 치명 저항(%)</div>
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_CresP" value=0 style="height: 30px; text-align: center;">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        추가 치명데미지 저항
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_cdmres" value=0 style="height: 30px; text-align: center;">
+      <td>
+        추가 치명데미지 저항(%)
+      </td>
+      <td>
+        <input type=number id="enemy_bonus_cdmresP" value=0 style="height: 30px; text-align: center;">
+      </td>
+    </tr>
+  </table>
+</div>
+<div style="position: absolute; top:900px">
+  <input id="skill_dmg" style="width: 50px; text-align: right;">%의 데미지를 <input id="attack_times" style="width: 50px; text-align: right;">&nbsp
+  <select id="dev" style="width: 100px;"><option value="번">번</option><option value="나눠서">번에 나눠서</option></select> 딜,
+   지형상성 : <select id="region" style="width: 70px;"><option value="1.3">SS(1.3)</option><option value="1.2">S(1.2)</option><option value="1.1">A(1.1)</option><option value="1">B(1.0)</option><option value="0.9">C(0.9)</option><option value="0.8">D(0.8)</option></select>
+  <div></div>
+  <div id="hit_chance" style="display: inline;"></div> % 확률로 명중, 명중 시 <div id="crt_chance" style="display: inline;"></div>% 확률로 치명타, 치명타 시 데미지 : <div id="crt_dm" style="display: inline;"></div> (공격 명중 1번당)
+  <div>명중 1번 당 데미지</div>
+  <div>일반 딜 <div id="atk_flr" style="display: inline;"></div> ~ <div id="atk_ceil" style="display: inline;"></div> 기댓값 : <div id="atk_avg" style="display: inline;"></div></div>
+  <div>치명타 딜 <div id="crt_flr" style="display: inline;"></div> ~ <div id="crt_ceil" style="display: inline;"></div> 기댓값 : <div id="crt_avg" style="display: inline;"></div></div>
+  총 데미지
+  <div>일반 딜 <div id="f_atk_flr" style="display: inline;"></div> ~ <div id="f_atk_ceil" style="display: inline;"></div> 기댓값 : <div id="f_atk_avg" style="display: inline;"></div></div>
+  <div>치명타 딜 <div id="f_crt_flr" style="display: inline;"></div> ~ <div id="f_crt_ceil" style="display: inline;"></div> 기댓값 : <div id="f_crt_avg" style="display: inline;"></div></div>
+  <div style="display: inline;">적 체력 : </div><div id="f_enemy_hp" style="display: inline;"></div><div></div>
+  <div style="display: inline;">적 방어력 : </div><div id="f_enemy_def" style="display: inline;"></div><div></div>
+  <div style="display: inline;">적 치명 저항력 : </div><div id="f_enemy_crtres" style="display: inline;"></div><div></div>
+  <div style="display: inline;">적 치명 데미지 저항력 : </div><div id="f_enemy_crtdmgres" style="display: inline;"></div><div></div>
+
+</div>
+<div style="position: absolute; top:1300px">
+  &nbsp
+</div>
+
+<table style="display: none;">
+  <td>
+  
+  <div id="stu_lev"></div>
+  <div id="stu_star"></div>
+
+  <div id="stu_hp1"></div>
+  <div id="stu_atk1"></div>
+
+  <div id="stu_def1"></div>
+  <div id="stu_heal1"></div>
+
+  <div id="stu_acc"></div>
+  <div id="stu_evade"></div>
+      
+  <div id="stu_crt"></div>
+  <div id="stu_crtDmg"></div><div >%</div>
+      
+  <div id="stu_stab"></div>
+  <div id="stu_range"></div> 
+      
+  <div id="stu_ccup"></div>
+  <div id="stu_ccres"></div> 
+      
+  <div id="stu_cost"></div>
+  <div id="stu_urban1"></div>
+
+  <div id="stu_outdoor1"></div>
+  <div id="stu_indoor1"></div>
+  <div></div>
+         
+  <div></div>
+  <div></div>
+  </td>
+</table>
+
+<div style="display: none;">
+  <div id='bonus_atk'></div>
+  <div id='bonus_atkP'></div>
+  <div id='bonus_hp'></div>
+  <div id='bonus_hpP'></div>
+  <div id='bonus_def'></div>
+  <div id='bonus_defP'></div>
+  <div id='bonus_heal'></div>
+  <div id='bonus_healP'></div>
+  <div id='bonus_evade'></div>
+  <div id='bonus_evadeP'></div>
+  <div id='bonus_CRate'></div>
+  <div id='bonus_CRateP'></div>
+  <div id='bonus_CDmg'></div>
+  <div id='bonus_CDmgP'></div>
+  <div id='bonus_acc'></div>
+  <div id='bonus_accP'></div>
+  <div id='bonus_Cres'></div>
+  <div id='bonus_CresP'></div>
+  <div id='bonus_Cdmres'></div>
+  <div id='bonus_CdmresP'></div>
+  <div id='bonus_ccup'></div>
+  <div id='bonus_ccupP'></div>
+  <div id='bonus_ccres'></div>
+  <div id='bonus_ccresP'></div>
+</div>
+
+<script language="javascript">
+  function showPopup1() {
+    var stats = window.open("stu_stats.html", "a", "width=700, height=500")
+
+  }
+
+  function showPopup2() {
+    var stats = window.open("bonus.html", "a", "width=700, height=500")
+
+  }
+</script>
+</body>

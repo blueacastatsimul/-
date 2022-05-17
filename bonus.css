@@ -1,0 +1,88 @@
+.form{
+  position: relative;
+  float: right;
+}
+
+.plus1{
+  position: relative;
+  display: inline;
+  text-align: right;
+  color: #31455c;
+  background-color: rgba( 255, 255, 255, 0 );
+  font-family: 'gy';
+  font-weight: 1000;
+  font-size: 100%;
+  border: 0px;
+  width:50px;
+  right: 10px;
+  z-index: 2;
+}
+
+.plus2{
+  position: relative;
+  display: inline;
+  text-align: right;
+  color: #31455c;
+  background-color: rgba( 255, 255, 255, 0 );
+  font-family: 'gy';
+  font-weight: 1000;
+  font-size: 100%;
+  border: 0px;
+  width:50px;
+  left:10px;
+  z-index: 2;
+}
+
+
+.percent{
+  position: relative;
+  display: inline;
+  text-align: right;
+  color: #31455c;
+  background-color: rgba( 255, 255, 255, 0 );
+  font-family: 'gy';
+  font-weight: 1000;
+  font-size: 100%;
+  border: 0px;
+  width:50px;
+  left:10px;
+  z-index: 2;
+}
+
+.bonus_input{
+  position: relative;
+  text-align: right;
+  color: #31455c;
+  background-color: rgba( 255, 255, 255, 0 );
+  font-family: 'gy';
+  font-weight: 1000;
+  font-size: 100%;
+  border: 0px;
+  width:50px;
+  right: 10px;
+  z-index: 5;
+}
+
+.bonus_input_percent{
+  position: relative;
+  text-align: right;
+  color: #31455c;
+  background-color: rgba( 255, 255, 255, 0 );
+  font-family: 'gy';
+  font-weight: 1000;
+  font-size: 100%;
+  border: 0px;
+  left:10px;
+  width:50px;
+  z-index: 5;
+}
+
+#bonus_back{
+  position: absolute;
+  width: 610px;
+  height: 324px;
+  background-color: #e2e2e0;
+  top:0px;
+  left:0px;
+  z-index: 1;
+}
