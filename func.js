@@ -5,8 +5,10 @@ export function crit_chance(input_crt, input_cres) {       //크리 확률 계�
 
 export function dmg_cal(atk, skill, def, type, region, devide, stab, iscrt, cdmg, bonus_cdmg, cdmres)  {
     var df = (1666.66/(1666.66+def))
+    cdmres = cdmres > 8000 ? 8000 : cdmres
     let dmg_ceil = atk * skill/100 * type * region * df / devide
     let dmg_floor = (stab/(stab + 997) + 0.2) * dmg_ceil
+
     if (!iscrt) {
     return [dmg_ceil, dmg_floor]
     } else {
@@ -22,7 +24,7 @@ export function hit_chance(evade, acc) {
 }
 
 export function checkfor(list, target) {
-    let i = "0"
+    let i = 0
     let check = false
     for (i=0;i<list.length; i++) {
         if (list[i].includes(target)){

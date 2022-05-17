@@ -1,7 +1,8 @@
 import { student, stu_detail, stu_list, stu_skill } from "./student.js"
 import { equipList } from "./equipment.js"
 import { stu_bond } from "./bond.js"
-import { crit_chance, dmg_cal, hit_chance } from "./func.js"
+import { checkfor, checkforstudent, crit_chance, dmg_cal, hit_chance } from "./func.js"
+import { boss_list, c_boss } from "./boss.js"
 
 let input_name = "나츠"
 let input_lev = 73
@@ -46,18 +47,18 @@ input.addEventListener('click', () => {
     } else if ( isNaN(input_star) || ( input_star < 1 || input_star > 5 )) { 
         alert("학생 성급 오류\n처리할 수 없는 수입니다!\n1~5사이의 정수를 입력해주시기 바랍니다!")
         throw "처리할 수 없는 성급입니다! 입력된 성급 : "+input_star
-    } else if ( isNaN(input_exlev) || ( input_exlev < 1 || input_exlev > 5 )) { 
-        alert("ex 스킬 레벨 오류\n처리할 수 없는 수입니다!\n1~5사이의 정수를 입력해주시기 바랍니다!")
-        throw "처리할 수 없는 ex 스킬 레벨입니다! 입력된 ex 스킬 레벨 : "+input_exlev
-    } else if ( isNaN(input_s1lev) || ( input_s1lev < 1 || input_s1lev > 10 )) { 
-        alert("기본 스킬 레벨 오류\n처리할 수 없는 수입니다!\n1~10사이의 정수를 입력해주시기 바랍니다!")
-        throw "처리할 수 없는 기본 스킬 레벨입니다! 입력된 기본 스킬 레벨 : "+input_s1lev
-    } else if ( isNaN(input_s2lev) || ( input_s2lev < 1 || input_s2lev > 10 )) { 
-        alert("강화 스킬 레벨 오류\n처리할 수 없는 수입니다!\n1~10사이의 정수를 입력해주시기 바랍니다!")
-        throw "처리할 수 없는 강화 스킬 레벨입니다! 입력된 강화 스킬 레벨 : "+input_s2lev
-    } else if ( isNaN(input_s3lev) || ( input_s3lev < 1 || input_s3lev > 10 )) { 
-        alert("서브 스킬 레벨 오류\n처리할 수 없는 수입니다!\n1~10사이의 정수를 입력해주시기 바랍니다!")
-        throw "처리할 수 없는 서브 스킬 레벨입니다! 입력된 서브 스킬 레벨 : "+input_s3lev
+    }
+    if ( isNaN(input_exlev) || ( input_exlev < 1 || input_exlev > 5 )) { 
+        input_exlev = 5
+    }
+    if ( isNaN(input_s1lev) || ( input_s1lev < 1 || input_s1lev > 10 )) { 
+        input_s1lev = 10
+    }
+    if ( isNaN(input_s2lev) || ( input_s2lev < 1 || input_s2lev > 10 )) { 
+        input_s2lev = 10
+    }
+    if ( isNaN(input_s3lev) || ( input_s3lev < 1 || input_s3lev > 10 )) { 
+        input_s3lev = 10
     }
 
     stu = new student (input_lev,input_star, input_name)
@@ -93,10 +94,15 @@ function display() {
     stu.bonus_sum_evade += isNaN(parseFloat(document.getElementById('bonus_evade').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_evade').innerHTML)
     stu.bonus_times_evade += isNaN(parseFloat(document.getElementById('bonus_evadeP').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_evadeP').innerHTML)
     stu.bonus_sum_CRate += isNaN(parseFloat(document.getElementById('bonus_CRate').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_CRate').innerHTML)
-    stu.bonus_times_CRate += isNaN(parseFloat(document.getElementById('bonus_CRateP').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_CRateP').innerHTML)
+    if (isNaN(stu.btcr)) {
+        stu.btcr = 0
+    }
+    if (isNaN(parseFloat(document.getElementById('bonus_CRateP').innerHTML))) {
+        stu.btcr += 0
+    } else { stu.btcr += parseFloat(document.getElementById('bonus_CRateP').innerHTML)}
+
     stu.bonus_sum_CDmg += isNaN(parseFloat(document.getElementById('bonus_CDmg').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_CDmg').innerHTML)
     stu.bonus_times_CDmg += isNaN(parseFloat(document.getElementById('bonus_CDmgP').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_CDmgP').innerHTML)
-
     stu.bonus_sum_acc += isNaN(parseFloat(document.getElementById('bonus_acc').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_acc').innerHTML)
     stu.bonus_times_acc += isNaN(parseFloat(document.getElementById('bonus_accP').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_accP').innerHTML)
     stu.bonus_sum_Cres += isNaN(parseFloat(document.getElementById('bonus_Cres').innerHTML)) ? 0 :  parseFloat(document.getElementById('bonus_Cres').innerHTML)
@@ -323,7 +329,7 @@ const enemy_input = document.querySelector("#enemy_input")
 
         document.getElementById("hit_chance").innerHTML = (hit_chance(enemy.evade, stu.acc)*100).toFixed(2)
         document.getElementById("crt_chance").innerHTML = (crit_chance(stu.CRate, enemy.CRes)*100).toFixed(2)
-        document.getElementById("crt_dm").innerHTML = 
+        document.getElementById("crt_dm").innerHTML = parseFloat(((stu.CDmg*100-enemy.CdmRes )*(1+stu.bonus_times_CDmg)/10000).toFixed(2))
         
         document.getElementById("atk_flr").innerHTML = parseInt(final_dmg[1])
         document.getElementById("atk_ceil").innerHTML = parseInt(final_dmg[0])
@@ -345,6 +351,116 @@ const enemy_input = document.querySelector("#enemy_input")
         document.getElementById("f_enemy_def").innerHTML = parseInt(enemy.def)
         document.getElementById("f_enemy_crtres").innerHTML = parseInt(enemy.CRes)
         document.getElementById("f_enemy_crtdmgres").innerHTML = parseInt(enemy.CdmRes)
+        document.getElementById("f_enemy_type").innerHTML = stu_detail[enemy.stuNum][4]
     }
 )
 
+let boss_name="비나"
+let boss_lev = 4
+
+let boss_num = checkfor(boss_list, boss_name)[0]
+
+let boss_hp = boss_list[boss_num+boss_lev][1]
+let boss_atk = boss_list[boss_num+boss_lev][2]
+let boss_def = boss_list[boss_num+boss_lev][3]
+let boss_cres = boss_list[boss_num+boss_lev][4]
+let boss_cdmres = boss_list[boss_num+boss_lev][5]
+
+let boss = new c_boss(boss_name, boss_hp, boss_atk, boss_def, boss_cres, boss_cdmres)
+
+const boss_input = document.querySelector("#boss_input")
+    boss_input.addEventListener('click', () => {
+        boss_name = "" ? "비나" : document.getElementById("boss_name").value
+        boss_num = checkfor(boss_list, boss_name)[0] - 1
+        boss_lev = parseInt(document.getElementById("boss_lev").value)
+
+        let boss_bonus_def = parseFloat(document.getElementById("boss_bonus_def").value)
+        let boss_bonus_defP = parseFloat(document.getElementById("boss_bonus_defP").value)
+        let boss_bonus_CRes = parseFloat(document.getElementById("boss_bonus_Cres").value)
+        let boss_bonus_CResP = parseFloat(document.getElementById("boss_bonus_CresP").value)
+        let boss_bonus_CdmRes = parseFloat(document.getElementById("boss_bonus_cdmres").value)
+        let boss_bonus_CdmResP = parseFloat(document.getElementById("boss_bonus_cdmresP").value)
+                
+        boss_hp = boss_list[boss_num+boss_lev][1]
+        boss_atk = boss_list[boss_num+boss_lev][2]
+        boss_def = boss_list[boss_num+boss_lev][3]
+        boss_cres = boss_list[boss_num+boss_lev][4]
+        boss_cdmres = boss_list[boss_num+boss_lev][5]
+
+        boss = new c_boss(boss_name, boss_hp, boss_atk, boss_def, boss_cres, boss_cdmres)
+
+
+        boss.bonus_sum_def += boss_bonus_def == 0 ? 0 : boss_bonus_def
+        boss.bonus_times_def += boss_bonus_defP == 0 ? 0 : boss_bonus_defP
+        boss.bonus_sum_CRes += boss_bonus_CRes == 0 ? 0 : boss_bonus_CRes
+        boss.bonus_times_CRes += boss_bonus_CResP == 0 ? 0 : boss_bonus_CResP
+        boss.bonus_sum_CdmRes += boss_bonus_CdmRes == 0 ? 0 : boss_bonus_CdmRes
+        boss.bonus_times_CdmRes += boss_bonus_CdmResP == 0 ? 0 : boss_bonus_CdmResP
+
+        boss.bonus_cal()
+
+        skill = parseFloat(document.getElementById("skill_dmg").value)
+
+        atk_times = 1
+        devision = 1
+        if (document.getElementById("dev").value=="번") {
+            atk_times = parseInt(document.getElementById("attack_times").value)
+        } else {devision = parseInt(document.getElementById("attack_times").value); atk_times = parseInt(document.getElementById("attack_times").value)}
+        region = parseFloat(document.getElementById("region").value)
+
+        switch (stu_detail[stu.stuNum][3]) {
+            case "폭발":
+                if (boss_list[boss_num+boss_lev][6] == "경장갑"){
+                    type = 2;
+                } else if (boss_list[boss_num+boss_lev][6] == "중장갑"){
+                    type = 1;
+                } else { type = 0.5}
+                break;
+            case "관통":
+                if (boss_list[boss_num+boss_lev][6] == "경장갑"){
+                    type = 0.5;
+                } else if (boss_list[boss_num+boss_lev][6] == "중장갑"){
+                    type = 2;
+                } else { type = 1}
+                break;
+            case "신비":
+                if (boss_list[boss_num+boss_lev][6] == "경장갑"){
+                    type = 1;
+                } else if (boss_list[boss_num+boss_lev][6] == "중장갑"){
+                    type = 0.5;
+                } else { type = 2}
+                break;
+        }
+
+        let final_dmg = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, false, stu.CDmg, stu.bonus_times_CDmg, boss.Cdmres)
+        let final_crt = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, true, stu.CDmg, stu.bonus_times_CDmg, boss.Cdmres)
+
+        document.getElementById("hit_chance").innerHTML = (hit_chance(boss.evade, stu.acc)*100).toFixed(2)
+        document.getElementById("crt_chance").innerHTML = (crit_chance(stu.CRate, boss.Cres)*100).toFixed(2)
+        document.getElementById("crt_dm").innerHTML = parseFloat(((stu.CDmg*100-boss.Cdmres)*(1+stu.bonus_times_CDmg)/10000).toFixed(2))
+        
+        document.getElementById("atk_flr").innerHTML = parseInt(final_dmg[1])
+        document.getElementById("atk_ceil").innerHTML = parseInt(final_dmg[0])
+        document.getElementById("atk_avg").innerHTML = parseInt((final_dmg[0]+final_dmg[1])/2)
+        
+        document.getElementById("crt_flr").innerHTML = parseInt(final_crt[1])
+        document.getElementById("crt_ceil").innerHTML = parseInt(final_crt[0])
+        document.getElementById("crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)
+
+        document.getElementById("f_atk_flr").innerHTML = parseInt(final_dmg[1])*atk_times
+        document.getElementById("f_atk_ceil").innerHTML = parseInt(final_dmg[0])*atk_times
+        document.getElementById("f_atk_avg").innerHTML = parseInt((final_dmg[0]+final_dmg[1])/2)*atk_times
+        
+        document.getElementById("f_crt_flr").innerHTML = parseInt(final_crt[1])*atk_times
+        document.getElementById("f_crt_ceil").innerHTML = parseInt(final_crt[0])*atk_times
+        document.getElementById("f_crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)*atk_times
+
+        document.getElementById("f_enemy_hp").innerHTML = parseInt(boss.hp)
+        document.getElementById("f_enemy_def").innerHTML = parseInt(boss.def)
+        document.getElementById("f_enemy_crtres").innerHTML = parseInt(boss.Cres)
+        document.getElementById("f_enemy_crtdmgres").innerHTML = parseInt(boss.Cdmres)
+        document.getElementById("f_enemy_type").innerHTML = boss_list[boss_num+boss_lev][6]
+
+
+    }
+)

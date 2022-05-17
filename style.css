@@ -829,8 +829,8 @@
   font-weight: 1000;
   font-size: 18px;
   transform: skew(-10deg);
-  width:200px;
-  height: 50px;
+  width:50px;
+  height: 20px;
   left: 30px;
   top: 396px;
   z-index: 2;
@@ -844,7 +844,7 @@
   font-weight: 1000;
   font-size: 15px;
   width:200px;
-  height: 50px;
+  height: 20px;
   left: 123px;
   top: 388px;
   z-index: 2;
