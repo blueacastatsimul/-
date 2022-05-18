@@ -3,16 +3,18 @@ export function crit_chance(input_crt, input_cres) {       //크리 확률 계�
     return crt
 }
 
-export function dmg_cal(atk, skill, def, type, region, devide, stab, iscrt, cdmg, bonus_cdmg, cdmres)  {
+export function dmg_cal(atk, skill, def, type, region, devide, stab, iscrt, cdmg, bonus_cdmg, bonus_cdmgP, cdmres)  {
     var df = (1666.66/(1666.66+def))
     cdmres = cdmres > 8000 ? 8000 : cdmres
     let dmg_ceil = atk * skill/100 * type * region * df / devide
     let dmg_floor = (stab/(stab + 997) + 0.2) * dmg_ceil
 
+    console.log(atk,skill,devide,region,type, df)
+
     if (!iscrt) {
     return [dmg_ceil, dmg_floor]
     } else {
-        dmg_ceil = dmg_ceil *(cdmg*100-cdmres )*(1+bonus_cdmg)/10000
+        dmg_ceil = dmg_ceil *(cdmg*100+bonus_cdmg-cdmres )*(1+bonus_cdmgP)/10000
         dmg_floor = (stab/(stab + 997) + 0.2) * dmg_ceil
         return [dmg_ceil, dmg_floor]
     }

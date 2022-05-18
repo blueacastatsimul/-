@@ -131,7 +131,7 @@ function display() {
     document.getElementById("stu_acc").innerHTML = parseInt(stu.acc);
     document.getElementById("stu_evade").innerHTML = parseInt(stu.evade);
     document.getElementById("stu_crt").innerHTML = parseInt(stu.CRate);
-    document.getElementById("stu_crtDmg").innerHTML = parseInt(stu.CDmg);
+    document.getElementById("stu_crtDmg").innerHTML = parseInt(stu.CDmg_display);
     document.getElementById("stu_stab").innerHTML = parseInt(stu.stab);
     document.getElementById("stu_range").innerHTML = parseInt(stu.range);
     document.getElementById("stu_ccup").innerHTML = parseInt(stu.ccup);
@@ -355,48 +355,39 @@ const enemy_input = document.querySelector("#enemy_input")
     }
 )
 
-let boss_name="비나"
-let boss_lev = 4
-
-let boss_num = checkfor(boss_list, boss_name)[0]
-
-let boss_hp = boss_list[boss_num+boss_lev][1]
-let boss_atk = boss_list[boss_num+boss_lev][2]
-let boss_def = boss_list[boss_num+boss_lev][3]
-let boss_cres = boss_list[boss_num+boss_lev][4]
-let boss_cdmres = boss_list[boss_num+boss_lev][5]
-
-let boss = new c_boss(boss_name, boss_hp, boss_atk, boss_def, boss_cres, boss_cdmres)
-
 const boss_input = document.querySelector("#boss_input")
     boss_input.addEventListener('click', () => {
-        boss_name = "" ? "비나" : document.getElementById("boss_name").value
-        boss_num = checkfor(boss_list, boss_name)[0] - 1
-        boss_lev = parseInt(document.getElementById("boss_lev").value)
+        let boss_name = "" ? "비나" : document.getElementById("boss_name").value
+        let boss_num = checkfor(boss_list, boss_name)[0]
+        let boss_lev = parseInt(document.getElementById("boss_lev").value)
 
         let boss_bonus_def = parseFloat(document.getElementById("boss_bonus_def").value)
-        let boss_bonus_defP = parseFloat(document.getElementById("boss_bonus_defP").value)
+        let boss_bonus_defP = parseFloat(document.getElementById("boss_bonus_defP").value/100)
         let boss_bonus_CRes = parseFloat(document.getElementById("boss_bonus_Cres").value)
-        let boss_bonus_CResP = parseFloat(document.getElementById("boss_bonus_CresP").value)
+        let boss_bonus_CResP = parseFloat(document.getElementById("boss_bonus_CresP").value/100)
         let boss_bonus_CdmRes = parseFloat(document.getElementById("boss_bonus_cdmres").value)
-        let boss_bonus_CdmResP = parseFloat(document.getElementById("boss_bonus_cdmresP").value)
-                
-        boss_hp = boss_list[boss_num+boss_lev][1]
-        boss_atk = boss_list[boss_num+boss_lev][2]
-        boss_def = boss_list[boss_num+boss_lev][3]
-        boss_cres = boss_list[boss_num+boss_lev][4]
-        boss_cdmres = boss_list[boss_num+boss_lev][5]
+        let boss_bonus_CdmResP = parseFloat(document.getElementById("boss_bonus_cdmresP").value/100)
 
-        boss = new c_boss(boss_name, boss_hp, boss_atk, boss_def, boss_cres, boss_cdmres)
+        let boss_hp = boss_list[boss_num+boss_lev][1]
+        let boss_atk = boss_list[boss_num+boss_lev][2]
+        let boss_def = boss_list[boss_num+boss_lev][3]
+        let boss_cres = boss_list[boss_num+boss_lev][4]
+        let boss_cdmres = boss_list[boss_num+boss_lev][5]
+
+        let boss = new c_boss(boss_name, boss_hp, boss_atk, boss_def, boss_cres, boss_cdmres)
 
 
-        boss.bonus_sum_def += boss_bonus_def == 0 ? 0 : boss_bonus_def
-        boss.bonus_times_def += boss_bonus_defP == 0 ? 0 : boss_bonus_defP
-        boss.bonus_sum_CRes += boss_bonus_CRes == 0 ? 0 : boss_bonus_CRes
-        boss.bonus_times_CRes += boss_bonus_CResP == 0 ? 0 : boss_bonus_CResP
-        boss.bonus_sum_CdmRes += boss_bonus_CdmRes == 0 ? 0 : boss_bonus_CdmRes
-        boss.bonus_times_CdmRes += boss_bonus_CdmResP == 0 ? 0 : boss_bonus_CdmResP
-
+        boss.bonus_sum_def += isNaN(boss_bonus_def)? 0 : boss_bonus_def
+        boss.bonus_times_def += isNaN(boss_bonus_defP)? 0 : boss_bonus_defP
+        boss.bonus_sum_CRes=0
+        boss.bonus_times_CRes=0
+        boss.bonus_times_CdmRes=0
+        boss.bonus_sum_CdmRes=0
+        boss.bonus_sum_CRes += isNaN(boss_bonus_CRes)? 0 : boss_bonus_CRes
+        boss.bonus_times_CRes += isNaN(boss_bonus_CResP)? 0 : boss_bonus_CResP
+        boss.bonus_sum_CdmRes += isNaN(boss_bonus_CdmRes)? 0 : boss_bonus_CdmRes
+        boss.bonus_times_CdmRes += isNaN(boss_bonus_CdmResP)? 0 : boss_bonus_CdmResP
+        
         boss.bonus_cal()
 
         skill = parseFloat(document.getElementById("skill_dmg").value)
@@ -432,12 +423,13 @@ const boss_input = document.querySelector("#boss_input")
                 break;
         }
 
-        let final_dmg = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, false, stu.CDmg, stu.bonus_times_CDmg, boss.Cdmres)
-        let final_crt = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, true, stu.CDmg, stu.bonus_times_CDmg, boss.Cdmres)
+        let final_dmg = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, false, stu.CDmg, stu.bonus_sum_CDmg, stu.bonus_times_CDmg, boss.Cdmres)
+        let final_crt = dmg_cal(stu.atk, skill, boss.def, type, region, devision, stu.stab, true, stu.CDmg, stu.bonus_sum_CDmg, stu.bonus_times_CDmg, boss.Cdmres)
 
         document.getElementById("hit_chance").innerHTML = (hit_chance(boss.evade, stu.acc)*100).toFixed(2)
         document.getElementById("crt_chance").innerHTML = (crit_chance(stu.CRate, boss.Cres)*100).toFixed(2)
-        document.getElementById("crt_dm").innerHTML = parseFloat(((stu.CDmg*100-boss.Cdmres)*(1+stu.bonus_times_CDmg)/10000).toFixed(2))
+        document.getElementById("crt_dm").innerHTML = parseFloat(((stu.CDmg*100+stu.bonus_sum_CDmg-boss.Cdmres)*(1+stu.bonus_times_CDmg)/10000).toFixed(2))
+        console.log(stu.CDmg*100,stu.bonus_sum_CDmg,boss.Cdmres,stu.bonus_times_CDmg)
         
         document.getElementById("atk_flr").innerHTML = parseInt(final_dmg[1])
         document.getElementById("atk_ceil").innerHTML = parseInt(final_dmg[0])

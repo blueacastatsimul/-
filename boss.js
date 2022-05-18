@@ -22,11 +22,9 @@ export class c_boss {
     }
 
     bonus_cal(){
-        this.atk = (this.atk+this.bonus_sum_atk)*(1+this.bonus_times_atk)
         this.def = (this.def+this.bonus_sum_def)*(1+this.bonus_times_def)
-        this.evade = (this.evade+this.bonus_sum_evade)*(1+this.bonus_times_evade)
-        this.CRes = (this.CRes+this.bonus_sum_Cres)*(1+this.bonus_times_Cres)
-        this.CdmRes = (this.CdmRes+this.bonus_sum_Cdmres)*(1+this.bonus_times_Cdmres)
+        this.Cres = (this.Cres+this.bonus_sum_CRes)*(1+this.bonus_times_CRes)
+        this.Cdmres = (this.Cdmres+this.bonus_sum_CdmRes)*(1+this.bonus_times_CdmRes)
     }
 }
 
@@ -39,7 +37,7 @@ export const boss_list = [
     ['', 6000000.0, 8000.0, 3900.0, 20.0, 5000.0, "중장갑"],
     ['', 7000000.0, 20000.0, 5000.0, 20.0, 10000.0, "중장갑"],
     ['시로 & 쿠로', 600000.0, 600.0, 700.0, 100.0, 5000.0, "특수장갑"],
-    ['', 1150000.0, 950.0, 700.0, 100.0, 5000.0], "특수장갑",
+    ['', 1150000.0, 950.0, 700.0, 100.0, 5000.0, "특수장갑"],
     ['', 1410000.0, 1400.0, 700.0, 100.0, 5000.0, "특수장갑"],
     ['', 2530000.0, 1600.0, 700.0, 100.0, 5000.0, "특수장갑"],
     ['', 10500000.0, 3700.0, 700.0, 100.0, 5000.0, "특수장갑"],

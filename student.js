@@ -200,7 +200,7 @@ export class student {
         this.heal = (this.heal+this.bonus_sum_heal)*(1+this.bonus_times_heal)
         this.evade = (this.evade+this.bonus_sum_evade)*(1+this.bonus_times_evade)
         this.CRate = (this.CRate+this.bonus_sum_CRate)*(1+this.btcr)
-        this.CDmg = (this.CDmg*100+this.bonus_sum_CDmg)*(1+this.bonus_times_CDmg)/100
+        this.CDmg_display = (this.CDmg*100+this.bonus_sum_CDmg)*(1+this.bonus_times_CDmg)/100
         this.CRes = (this.CRes+this.bonus_sum_Cres)*(1+this.bonus_times_Cres)
         this.CdmRes = (this.CdmRes+this.bonus_sum_Cdmres)*(1+this.bonus_times_Cdmres)
         this.ccup = (this.ccup+this.bonus_sum_ccup)*(1+this.bonus_times_ccup)
@@ -262,7 +262,7 @@ export const stu_list = [
     ["우타하",1638,232,2324,2294,17147,20,122,1578,4735,1176,98,245,100,200,5000,0,1000,"A","D","A","Gloves","Hairpin","Watch"],
     ["유우카",1396,108,1084,2997,50100,29,179,1400,4202,1440,100,200,100,200,5000,0,350,"B","B","A","Shoes","Badge","Charm"],
     ["우이",1908,238,2388,2146,18610,19,114,1464,4392,190,941,209,100,200,5000,0,750,"B","S","D","Gloves","Hairpin","Charm"],
-    ["유즈",976,356,3568,2197,21970,19,117,1432,4297,195,102,191,100,200,5000,0,650,"S","B","D","Hat","Hairpin","Watch"],
+    ["유즈",976,356,3568,2197,21970,19,117,1432,4297,195,102,191,100,240,5000,0,650,"S","B","D","Hat","Hairpin","Watch"],
     ["이오리",2056,320,3204,2313,23140,20,123,1359,4079,194,874,194,100,200,5000,0,650,"C","C","S","Hat","Hairpin","Watch"],
     ["이오리(수영복)",1784,351,3511,2010,17430,17,107,1548,4646,178,995,221,100,200,5000,0,750,"B","S","D","Shoes","Badge","Watch"],
     ["이즈나",1416,184,1846,2531,35080,22,136,1382,4147,1066,108,246,100,200,5000,0,450,"S","B","D","Gloves","Hairpin","Watch"],
