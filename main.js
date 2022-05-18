@@ -1,7 +1,7 @@
 import { student, stu_detail, stu_list, stu_skill } from "./student.js"
 import { equipList } from "./equipment.js"
 import { stu_bond } from "./bond.js"
-import { checkfor, checkforstudent, crit_chance, dmg_cal, hit_chance } from "./func.js"
+import { average, checkfor, checkforstudent, crit_chance, dmg_cal, hit_chance } from "./func.js"
 import { boss_list, c_boss } from "./boss.js"
 
 let input_name = "나츠"
@@ -324,8 +324,8 @@ const enemy_input = document.querySelector("#enemy_input")
                 } else { type = 2}
                 break;
         }
-        let final_dmg = dmg_cal(stu.atk, skill, enemy.def, type, region, devision, stu.stab, false, stu.CDmg, stu.bonus_times_CDmg, enemy.CdmRes)
-        let final_crt = dmg_cal(stu.atk, skill, enemy.def, type, region, devision, stu.stab, true, stu.CDmg, stu.bonus_times_CDmg, enemy.CdmRes)
+        let final_dmg = dmg_cal(stu.atk, skill, enemy.def, type, region, devision, stu.stab, false, stu.CDmg, stu.bonus_sum_CDmg, stu.bonus_times_CDmg, enemy.CdmRes)
+        let final_crt = dmg_cal(stu.atk, skill, enemy.def, type, region, devision, stu.stab, true, stu.CDmg, stu.bonus_sum_CDmg, stu.bonus_times_CDmg, enemy.CdmRes)
 
         document.getElementById("hit_chance").innerHTML = (hit_chance(enemy.evade, stu.acc)*100).toFixed(2)
         document.getElementById("crt_chance").innerHTML = (crit_chance(stu.CRate, enemy.CRes)*100).toFixed(2)
@@ -340,12 +340,8 @@ const enemy_input = document.querySelector("#enemy_input")
         document.getElementById("crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)
 
         document.getElementById("f_atk_flr").innerHTML = parseInt(final_dmg[1])*atk_times
-        document.getElementById("f_atk_ceil").innerHTML = parseInt(final_dmg[0])*atk_times
-        document.getElementById("f_atk_avg").innerHTML = parseInt((final_dmg[0]+final_dmg[1])/2)*atk_times
-        
-        document.getElementById("f_crt_flr").innerHTML = parseInt(final_crt[1])*atk_times
-        document.getElementById("f_crt_ceil").innerHTML = parseInt(final_crt[0])*atk_times
-        document.getElementById("f_crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)*atk_times
+        document.getElementById("f_atk_ceil").innerHTML = parseInt(final_crt[0])*atk_times
+        document.getElementById("f_atk_avg").innerHTML = parseInt(average((final_dmg[0]+final_dmg[1])/2,(final_crt[0]+final_crt[1])/2,crit_chance(stu.CRate, enemy.CRes),atk_times==1?devision:atk_times))
 
         document.getElementById("f_enemy_hp").innerHTML = parseInt(enemy.hp)
         document.getElementById("f_enemy_def").innerHTML = parseInt(enemy.def)
@@ -429,7 +425,6 @@ const boss_input = document.querySelector("#boss_input")
         document.getElementById("hit_chance").innerHTML = (hit_chance(boss.evade, stu.acc)*100).toFixed(2)
         document.getElementById("crt_chance").innerHTML = (crit_chance(stu.CRate, boss.Cres)*100).toFixed(2)
         document.getElementById("crt_dm").innerHTML = parseFloat(((stu.CDmg*100+stu.bonus_sum_CDmg-boss.Cdmres)*(1+stu.bonus_times_CDmg)/10000).toFixed(2))
-        console.log(stu.CDmg*100,stu.bonus_sum_CDmg,boss.Cdmres,stu.bonus_times_CDmg)
         
         document.getElementById("atk_flr").innerHTML = parseInt(final_dmg[1])
         document.getElementById("atk_ceil").innerHTML = parseInt(final_dmg[0])
@@ -440,12 +435,8 @@ const boss_input = document.querySelector("#boss_input")
         document.getElementById("crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)
 
         document.getElementById("f_atk_flr").innerHTML = parseInt(final_dmg[1])*atk_times
-        document.getElementById("f_atk_ceil").innerHTML = parseInt(final_dmg[0])*atk_times
-        document.getElementById("f_atk_avg").innerHTML = parseInt((final_dmg[0]+final_dmg[1])/2)*atk_times
-        
-        document.getElementById("f_crt_flr").innerHTML = parseInt(final_crt[1])*atk_times
-        document.getElementById("f_crt_ceil").innerHTML = parseInt(final_crt[0])*atk_times
-        document.getElementById("f_crt_avg").innerHTML = parseInt((final_crt[0]+final_crt[1])/2)*atk_times
+        document.getElementById("f_atk_ceil").innerHTML = parseInt(final_crt[0])*atk_times
+        document.getElementById("f_atk_avg").innerHTML = parseInt(average((final_dmg[0]+final_dmg[1])/2,(final_crt[0]+final_crt[1])/2,crit_chance(stu.CRate, boss.Cres),atk_times==1?devision:atk_times))
 
         document.getElementById("f_enemy_hp").innerHTML = parseInt(boss.hp)
         document.getElementById("f_enemy_def").innerHTML = parseInt(boss.def)
