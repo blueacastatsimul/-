@@ -1,0 +1,230 @@
+<head>
+    <script type="module" src="./statcal.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./tooltip.css">
+    </style>
+    <title>스탯/데미지 계산기</title>
+  </head>
+  
+  <body>  
+  <img id="stu_img" src="../img/히후미(수영복).png", style="position:absolute; left: 30px;">
+
+  <div id="back_box"></div>
+  <div id="box1"></div>
+  <div id="box2"></div>
+  
+  <datalist id="name_list"></datalist>
+  <input id="input_name" list="name_list" placeholder="학생 이름">
+  <input type="number" min="1" max="78" step="1" id="input_lev" placeholder="학생 레벨">
+  <input type="number" min="1" max="5" step="1" id="input_star" placeholder="학생 성급">
+  <input min="1" max="5" step="1" id="input_exlev" placeholder="레벨 입력">
+  <br><br>
+  <input id="input_s1lev" placeholder="레벨 입력">
+  <br><br>
+  <input id="input_s2lev" placeholder="레벨 입력">
+  <br><br>
+  <input id="input_s3lev" placeholder="레벨 입력">
+  <input type="submit" id="input" >
+  
+  <div id="box2_t">기본 능력치</div>
+  <div id="box3"></div>
+  <div id="stuHP">생명력</div><div id="stu_hp"></div>
+  <div id="stuATK">공격력</div><div id="stu_atk"></div>
+  <div id="stuDEF">방어력</div><div id="stu_def"></div>
+  <div id="stuHEAL">치유력</div><div id="stu_heal"></div>
+  <div id="detailB"></div>
+  <button id="detailT" onclick="showPopup1();">🔍<br>상세</button>
+  
+  <div id="box4"></div>
+  <div id="box5"></div>
+  <div id="box5_1"></div>
+  <div id="box6"></div>
+  <div id="box6_t">공격타입</div>
+  <div id="box6_type">신비</div>
+  <div id="box7"></div>
+  <div id="box7_t">방어타입</div>
+  <div id="box7_type">경장갑</div>
+  <div id="urban">시가지</div>
+  <div id="stu_urban"></div>
+  <div id="outdoor">야외</div>
+  <div id="stu_outdoor"></div>
+  <div id="indoor">실내</div>
+  <div id="stu_indoor"></div>
+  
+  <div id="box8"></div>
+  <div id="box9_ex" class="tooltipex">EX 스킬<div class="tooltipex-text" >
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_ex_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+    <div style="color: #476f8f; font-style: italic; display: inline;">EX스킬</div><div style="color: #c6c6c4; display:inline"> / </div>
+    <div style="color: #636564; font-style: italic; display: inline;">COST : </div><div id="stu_ex_cost" style="color: #1a3854; display: inline;"></div>
+    <div style="color: #f79a0a; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+    <div id="ex_lev" style="color: #f79a0a; display: inline;"></div>
+    <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+    <div style="color: #657787;"><div id="stu_ex_detail"></div></div>
+    <div ></div>
+  </div></div>
+  <img id="image_exskill" src="../img/error.png">
+  <img id="image_exskill2" src="../img/error.png">
+  <div id="box9_exl"></div>
+  <div id="box9_s1" class="tooltips1">기본 스킬<div class="tooltips1-text" >
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s1_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+    <div style="color: #476f8f; font-style: italic; display: inline;">기본스킬</div>
+    <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+    <div id="s1_lev" style="color: #f79a0a; display: inline;"></div>
+    <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+    <div style="color: #657787;"><div id="stu_s1_detail"></div></div>
+  </div></div>
+  <img id="image_s1" src="../img/error.png">
+  <img id="image_s12" src="../img/error.png">
+  <div id="box9_s1l"></div>
+  <div id="box9_s2" class="tooltips2">강화 스킬<div class="tooltips2-text" >
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s2_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+    <div style="color: #476f8f; font-style: italic; display: inline;">강화스킬</div>
+    <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+    <div id="s2_lev" style="color: #f79a0a; display: inline;"></div>
+    <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+    <div style="color: #657787;"><div id="stu_s2_detail"></div></div>
+  </div></div>
+  <img id="image_s2" src="../img/error.png">
+  <img id="image_s22" src="../img/error.png">
+  <div id="box9_s2l"></div>
+  <div id="box9_s3" class="tooltips3">서브 스킬<div class="tooltips3-text" >
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#bababa;">---------------------------------------------------------------------------</div>
+    <div style="color: #476f8f; font-style: italic; display: inline;">서브스킬</div>
+    <div style="color: #f79a0a; text-align: right; display: inline;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLv.</div>
+    <div id="s3_lev" style="color: #f79a0a; display: inline;"></div>
+    <div style="font-size: 1px; line-height: 1px; color:#d8dcde;">---------------------------------------------------------------------------</div>
+    <div style="color: #657787;"><div id="stu_s3_detail"></div></div>
+  </div></div>
+  <img id="image_s3" src="../img/error.png">
+  <img id="image_s32" src="../img/error.png">
+  <div id="box9_s3l"></div>
+  <button id="box9_bonus" onclick="showPopup2();">스탯<br>보너스<br>입력</button>
+  
+  <div id="box10"></div>
+  <div id="box11"><div id="weapon_name"></div><img id="weapon_type" src="../img/SMG.png"></div>
+  
+
+
+  <div class="eq_detail" id="box12_equip1" ><div id="equip1"></div><div class="eq_detail-text">
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#677888;">-----------------------------------------</div>
+    <div style="color: #476f8f; display: inline;"><div id="equip1_detail"></div></div>
+    <div style="color: #657787;"></div>
+  </div></div>
+  <div class="eq_detail" id="box12_equip2"><div id="equip2"></div><div class="eq_detail-text">
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color:#677888;">-----------------------------------------</div>
+    <div style="color: #476f8f; display: inline;"><div id="equip2_detail"></div></div>
+    <div style="color: #657787;"></div>
+  </div></div>
+  <div class="eq_detail"id="box12_equip3"><div id="equip3"></div><div class="eq_detail-text">
+    <div style="color: #64cbf2; display:inline" >| </div>
+    <div id="stu_s3_name" style="color:#163653; display:inline" ></div>
+    <div style="font-size: 1px; line-height: 1px; color: #677888;">-----------------------------------------</div>
+    <div style="color: #476f8f; display: inline;"><div id="equip3_detail"></div></div>
+    <div style="color: #657787;"></div>
+  </div></div>
+ 
+  
+  <input id="input_eq1" placeholder="장비 티어">
+  <input id="input_eq2" placeholder="장비 티어">
+  <input id="input_eq3" placeholder="장비 티어">
+  
+  <div id="left_box"></div>
+  <div id="left_name"><div id="stu_name"></div></div>
+  <div id="left_lv" style="display: inline;">LV. <div id="display_lv" style="display: inline;"></div></div>
+  <div id="star"></div>
+  <div id="bond"></div>
+  <div id="bond1">❤️</div>
+  <div id="bond2" style="font-size:10px; font-style: italic;">Rank<input id="input_bond" value="1"></div>
+  <div style="position: absolute; top:1300px">
+    &nbsp
+  </div>
+  
+  <table style="display: none;">
+    <td>
+    
+    <div id="stu_lev"></div>
+    <div id="stu_star"></div>
+  
+    <div id="stu_hp1"></div>
+    <div id="stu_atk1"></div>
+  
+    <div id="stu_def1"></div>
+    <div id="stu_heal1"></div>
+  
+    <div id="stu_acc"></div>
+    <div id="stu_evade"></div>
+        
+    <div id="stu_crt"></div>
+    <div id="stu_crtDmg"></div><div >%</div>
+        
+    <div id="stu_stab"></div>
+    <div id="stu_range"></div> 
+        
+    <div id="stu_ccup"></div>
+    <div id="stu_ccres"></div> 
+        
+    <div id="stu_cost"></div>
+    <div id="stu_urban1"></div>
+  
+    <div id="stu_outdoor1"></div>
+    <div id="stu_indoor1"></div>
+    <div></div>
+           
+    <div></div>
+    <div></div>
+    </td>
+  </table>
+  
+  <div style="display: none;">
+    <div id='bonus_atk'></div>
+    <div id='bonus_atkP'></div>
+    <div id='bonus_hp'></div>
+    <div id='bonus_hpP'></div>
+    <div id='bonus_def'></div>
+    <div id='bonus_defP'></div>
+    <div id='bonus_heal'></div>
+    <div id='bonus_healP'></div>
+    <div id='bonus_evade'></div>
+    <div id='bonus_evadeP'></div>
+    <div id='bonus_crate'></div>
+    <div id='bonus_crateP'></div>
+    <div id='bonus_cdmg'></div>
+    <div id='bonus_cdmgP'></div>
+    <div id='bonus_acc'></div>
+    <div id='bonus_accP'></div>
+    <div id='bonus_cres'></div>
+    <div id='bonus_cresP'></div>
+    <div id='bonus_cdmres'></div>
+    <div id='bonus_cdmresP'></div>
+    <div id='bonus_ccup'></div>
+    <div id='bonus_ccupP'></div>
+    <div id='bonus_ccres'></div>
+    <div id='bonus_ccresP'></div>
+  </div>
+  
+  <script language="javascript">
+    function showPopup1() {
+      var stats = window.open(href="details.html", "a", "width=700, height=500")
+  
+    }
+  
+    function showPopup2() {
+      var stats = window.open("./stat_bonus/bonus.html", "a", "width=700, height=500")
+  
+    }
+  
+  
+  </script>
+  </body>

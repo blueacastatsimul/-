@@ -1,0 +1,136 @@
+<head>
+    <title>학생 스탯 보너스 수치 입력</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="bonus.css">
+  </head>
+  
+  <body>
+    <div id="bonus_back"></div>
+    <table id="stu_stat">
+      <tbody>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">공격력 증가</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_atk"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_atkP"></class><div class="percent">%</div></div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">체력 증가&nbsp&nbsp</div>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_hp"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_hpP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">방어력 증가</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_def"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_defP"></class><div class="percent">%</div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">회복력 증가&nbsp&nbsp</div>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_heal"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_healP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">회피율 증가</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_evade"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_evadeP"></class><div class="percent">%</div></div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">치명수치 증가</div>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_crt"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_crtP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">치명 대미지 증가</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_crtd"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_crtdP"></class><div class="percent">%</div></div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">명중률 증가&nbsp&nbsp</div>
+            <div style="display: inline" class="form">              
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_acc"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_accP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">치명 저항 증가</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_crtres"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_crtresP"></class><div class="percent">%</div></div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">치명 대미지 저항&nbsp&nbsp</div>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_cdres"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_cdresP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+        <tr>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">군중 제어 강화</class>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_ccup"></class>
+            <div class="plus2">+</div></class><input class="bonus_input_percent" value="0" id="bonus_ccupP"></class><div class="percent">%</div></div></td>
+          <td><class id="colorLB" style="display:inline">| </class><class id="colorB" style="display:inline">군중 제어 저항&nbsp&nbsp</div>
+            <div style="display: inline" class="form">
+            <div class="plus1">+</div></class><input class="bonus_input" value="0" id="bonus_ccres"></class>
+            <div class="plus2">+</div><input class="bonus_input_percent" value="0" id="bonus_ccresP"></class><div class="percent">%</div></div></td></td>
+        </tr>
+      </tbody>
+    </table>
+  <input type="submit" id="sub" style="position: absolute; top: 330px">
+
+  <div style="display: none">
+    <div id="equip1_detail"></div>
+    <div id="equip2_detail"></div>
+    <div id="equip3_detail"></div>
+    <div id="stu_name"></div>
+    <div id="stu_lev"></div>
+    <div id="stu_star"></div>
+    <div id="stu_atk"></div>
+    <div id="stu_atk1"></div>
+    <div id="stu_def"></div>
+    <div id="stu_def1"></div>
+    <div id="stu_hp"></div>
+    <div id="stu_hp1"></div>
+    <div id="stu_heal"></div>
+    <div id="stu_heal1"></div>
+    <div id="stu_acc"></div>
+    <div id="stu_evade"></div>
+    <div id="stu_crt"></div>
+    <div id="stu_crtdmg"></div>
+    <div id="stu_stab"></div>
+    <div id="stu_range"></div>
+    <div id="stu_ccup"></div>
+    <div id="stu_ccres"></div>
+    <div id="stu_cost"></div>
+    <div id=""></div>
+    <div id="stu_urban"></div>
+    <div id="stu_urban1"></div>
+    <div id="stu_outdoor"></div>
+    <div id="stu_outdoor1"></div>
+    <div id="stu_indoor"></div>
+    <div id="stu_indoor1"></div>
+
+    <div id="stu_ex_name"></div>
+    <div id="stu_ex_cost"></div>
+    <div id='ex_lev'></div>
+    <div id="stu_ex_detail"></div>
+    <div id="stu_s1_name"></div>
+    <div id='s1_lev'></div>
+    <div id="stu_s1_detail"></div>
+    <div id="stu_s2_name"></div>
+    <div id='s2_lev'></div>
+    <div id="stu_s2_detail"></div>
+    <div id="stu_s3_name"></div>
+    <div id='s3_lev'></div>
+    <div id="stu_s3_detail"></div>
+    <div id="display_lv"></div>
+    <div id="equip1"></div>
+    <div id="equip2"></div>
+    <div id="equip3"></div>
+    <div id="box6_type"></div>
+    <div id="box7_type"></div>
+    <div id="star"></div>
+    <div id="input"></div>
+    <div id="name_list"></div>
+  </div>
+
+  <script type="module" src="./bonus.js"></script>
+  <script language="javascript">
+
+    </script>
+  
+  </body>

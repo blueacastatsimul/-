@@ -1,0 +1,334 @@
+<head>
+    <script type="module" src="./damagecal.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      table{
+        border: 2px solid; 
+        border-collapse: collapse;
+      }
+  
+      th, td{ 
+        border: 1px solid;
+        width: 150px;
+        text-align: center;
+      }
+    </style>
+    <title>데미지 계산기</title>
+</head>
+
+<body>
+    <datalist id="name_list"></datalist>
+    <div>
+        <table id="ally_student" >
+            <tr>
+            <td>
+                <input style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_name" list="name_list" placeholder="학생 이름">
+            </td>
+            <td>
+                <input max="100" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_lev" placeholder="학생 레벨">
+            </td>
+            <td>
+                <input max="5" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_star" placeholder="학생 성급">
+            </td>
+            <td>
+                <input max="50" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_bond" placeholder="학생 인연 레벨">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_eq1" placeholder="장비 1">
+            </td>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_eq2" placeholder="장비 2">
+            </td>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="ally_eq3" placeholder="장비 3">
+            </td>
+            <td>
+                <input id="ally_input" style="width : 100px; height: 30px;" type="submit" value="입력">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 공격력
+            </td>
+            <td>
+                <input id="ally_bonus_atk" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 명중 수치
+            </td>
+            <td>
+                <input id="ally_bonus_acc" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 공격력(%)
+            </td>
+            <td>
+                <input id="ally_bonus_atkP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 명중 수치(%)
+            </td>
+            <td>
+                <input id="ally_bonus_accP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 치명 수치 
+            </td>
+            <td>
+                <input id="ally_bonus_crate" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 치명 데미지
+            </td>
+            <td>
+                <input id="ally_bonus_cdmg" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <div style="font-size: 14px;">추가 치명 수치(%)</div>
+            </td>
+            <td>
+                <input id="ally_bonus_crateP" value=0 style="height: 30px; text-align: center;">
+            <td>
+                <div style="font-size: 14px;">추가 치명 데미지(%)</div>
+            </td>
+            <td>
+                <input id="ally_bonus_cdmgP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="position: absolute; top:400px;" >
+        적 종류 : 
+        <input type="radio" value="student" name="choose" onclick="switch_enemy(this.value);" checked>학생
+        <input type="radio" value="boss" name="choose" onclick="switch_enemy(this.value);">총력전 보스
+        <table id="enemy_student" >
+            <tr>
+            <td>
+                <input style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_name" list="name_list" placeholder="적 학생 이름">
+            </td>
+            <td>
+                <input max="100" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_lev" placeholder="적 학생 레벨">
+            </td>
+            <td>
+                <input max="5" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_star" placeholder="적 학생 성급">
+            </td>
+            <td>
+                <input max="50" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_bond" placeholder="적 학생 인연 레벨">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq1" placeholder="장비 1">
+            </td>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq2" placeholder="장비 2">
+            </td>
+            <td>
+                <input max="6" min="1" type=number style="width : 100%; height: 30px; border: 0px; text-align: center;" id="enemy_eq3" placeholder="장비 3">
+            </td>
+            <td>
+                <input id="enemy_input" style="width : 100px; height: 30px;" type="submit" value="입력">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 체력
+            </td>
+            <td>
+                <input id="enemy_bonus_hp" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 방어력
+            </td>
+            <td>
+                <input id="enemy_bonus_def" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 체력(%)
+            </td>
+            <td>
+                <input id="enemy_bonus_hpP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 방어력(%)
+            </td>
+            <td>
+                <input id="enemy_bonus_defP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 회피 수치 
+            </td>
+            <td>
+                <input id="enemy_bonus_evade" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 치명 저항
+            </td>
+            <td>
+                <input id="enemy_bonus_cres" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <div style="font-size: 14px;">추가 회피 수치(%)</div>
+            </td>
+            <td>
+                <input id="enemy_bonus_evadeP" value=0 style="height: 30px; text-align: center;">
+            <td>
+                <div style="font-size: 14px;">추가 치명 저항(%)</div>
+            </td>
+            <td>
+                <input id="enemy_bonus_cresP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 치명데미지 저항
+            </td>
+            <td>
+                <input id="enemy_bonus_cdmres" value=0 style="height: 30px; text-align: center;">
+            <td>
+                추가 치명데미지 저항(%)
+            </td>
+            <td>
+                <input id="enemy_bonus_cdmresP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+        </table>
+        <table id="enemy_boss" style="display: none;">
+            <tr>
+            <td>
+                <select style="width : 100%; height: 30px; border: 0px; text-align: center;" id="boss_name">
+                <option value="비나">보스 이름</option>
+                <option value="비나">비나</option>
+                <option value="시로 & 쿠로">시로 & 쿠로</option>
+                <option value="예로니무스">예로니무스</option>
+                <option value="카이텐">카이텐</option>
+                <option value="페로로질라">페로로질라</option>
+                <option value="헤세드">헤세드</option>
+                <option value="호드">호드</option>
+                </select>
+            </td>
+            <td>
+                <select id="boss_lev" style="width: 100px; height: 30px; text-align: center;">
+                <option value=4>난이도</option>
+                <option value=0>normal</option>
+                <option value=1>hard</option>
+                <option value=2>very hard</option>
+                <option value=3>hardcore</option>
+                <option value=4>extreme</option>
+                <option value=5>insane</option>
+                </select>
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <input id="boss_input" style="width : 100px; height: 30px;" type="submit" value="입력">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 방어력
+            </td>
+            <td>
+                <input id="boss_bonus_def" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 회피 수치 
+            </td>
+            <td>
+                <input id="boss_bonus_evade" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 방어력(%)
+            </td>
+            <td>
+                <input id="boss_bonus_defP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 회피 수치(%)
+            </td>
+            <td>
+                <input id="boss_bonus_defP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                추가 치명 저항
+            </td>
+            <td>
+                <input id="boss_bonus_cres" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                추가 치명 데미지<br>저항
+            </td>
+            <td>
+                <input id="boss_bonus_cdmres" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <div style="font-size: 14px;">추가 치명 저항(%)</div>
+            </td>
+            <td>
+                <input id="boss_bonus_cresP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            <td>
+                <div>추가 치명 데미지<br>저항(%)</div>
+            </td>
+            <td>
+                <input id="boss_bonus_cdmresP" value=0 style="height: 30px; text-align: center;">
+            </td>
+            </tr>
+        </table>
+
+        <div>
+            <input id="skill_dmg" style="width: 50px; text-align: right;">%의 데미지를 <input id="attack_times" style="width: 50px; text-align: right;">&nbsp
+            <select id="dev" style="width: 100px;"><option value="번">번</option><option value="나눠서">번에 나눠서</option></select> 딜,
+            지형상성 : <select id="region" style="width: 70px;"><option value="1.3">SS(1.3)</option><option value="1.2">S(1.2)</option><option value="1.1">A(1.1)</option><option value="1">B(1.0)</option><option value="0.9">C(0.9)</option><option value="0.8">D(0.8)</option></select>
+            <div></div>
+            <div id="hit_chance" style="display: inline;"></div> % 확률로 명중, 명중 시 <div id="crt_chance" style="display: inline;"></div>% 확률로 치명타, 치명타 시 데미지 : <div id="crt_dm" style="display: inline;"></div> (공격 명중 1번당)
+            <div>명중 1번 당 데미지</div>
+            <div>일반 딜 <div id="atk_flr" style="display: inline;"></div> ~ <div id="atk_ceil" style="display: inline;"></div> 기댓값 : <div id="atk_avg" style="display: inline;"></div></div>
+            <div>치명타 딜 <div id="crt_flr" style="display: inline;"></div> ~ <div id="crt_ceil" style="display: inline;"></div> 기댓값 : <div id="crt_avg" style="display: inline;"></div></div>
+            총 데미지
+            <div><div id="f_atk_flr" style="display: inline;"></div> ~ <div id="f_atk_ceil" style="display: inline;"></div> 기댓값 : <div id="f_atk_avg" style="display: inline;"></div></div>
+            <div style="display: inline;">적 체력 : </div><div id="f_enemy_hp" style="display: inline;"></div><div></div>
+            <div style="display: inline;">적 방어력 : </div><div id="f_enemy_def" style="display: inline;"></div><div style="display: inline;"> 실제 들어가는 데미지 : </div><div style="display: inline;" id="df"></div><div></div>
+            <div style="display: inline;">적 치명 저항력 : </div><div id="f_enemy_crtres" style="display: inline;"></div><div></div>
+            <div style="display: inline;">적 치명 데미지 저항력 : </div><div id="f_enemy_crtdmgres" style="display: inline;"></div><div></div>
+            <div style="display: inline;">적 타입 : </div><div id="f_enemy_type" style="display: inline;"></div>
+        </div>
+    </div>
+
+    <div style="position: relative; top:1000px;">
+        &nbsp
+    </div>
+    <script>
+        function switch_enemy(enemy_type) {
+            if (enemy_type == "student") {
+                document.getElementById("enemy_student").style.display = "block"
+                document.getElementById("enemy_boss").style.display = "none"
+            } else {
+                document.getElementById("enemy_student").style.display = "none"
+                document.getElementById("enemy_boss").style.display = "block"
+            }
+        }
+    </script>
+</body>
